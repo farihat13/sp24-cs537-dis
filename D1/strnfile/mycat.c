@@ -13,6 +13,7 @@ int main(int argc, char *argv[]) {
         return 1;
     }
 
+    // Read the whole file
     char buf[80];
     while (fgets(buf, 80, fp) != NULL) {
         printf("%s", buf);
@@ -20,6 +21,7 @@ int main(int argc, char *argv[]) {
     printf("\n");
 
     // Move the file position indicator to the beginning of the file
+    // and Read again from the beginning
     if (fseek(fp, 0, SEEK_SET) != 0) {
         perror("Error using fseek");
         fclose(fp);
@@ -30,7 +32,8 @@ int main(int argc, char *argv[]) {
     }
     printf("\n");
 
-    // Move the file position indicator to the beginning of the file
+    // Move the file position indicator to the 5 char after beginning of the file
+    // and Read again 
     if (fseek(fp, 5, SEEK_SET) != 0) {
         perror("Error using fseek");
         fclose(fp);

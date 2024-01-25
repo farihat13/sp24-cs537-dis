@@ -1,5 +1,6 @@
 # Discussion 01 (Jan 24, 2023)
 
+
 ## Demonstrate Project 0
 
 Link: `https://git.doit.wisc.edu/cdis/cs/courses/cs537/spring24/public/p0`
@@ -34,113 +35,118 @@ Steps:
 9. Project Results
 
 
-## GDB “GNU Debugger”
 
-### compile 
+## Project 01
+
+
+
+### GDB (GNU Debugger)
+
+- buggy.c
+- buggyfactorial.c
+
+#### Compile 
 
 **Flags:**
 
-- $ `gcc -o hello hello-world.c`    
-`-o`:       provide executable name
+- $ `gcc -o hello hello-world.c`                # `-o`:       provide executable name
 
-- $ `gcc -Wall hello-world.c`       
-`-Wall`:    show better warnings
+- $ `gcc -Wall hello-world.c`                   # `-Wall`:    show better warnings
 
-- $ `gcc -Werror hello-world.c`     
-`-Werror`:  show warnings as errors
+- $ `gcc -Werror hello-world.c`                 # `-Werror`:  show warnings as errors
 
-- $ `gcc -O hello-world.c`          
-`-O`:       optimize code
+- $ `gcc -O hello-world.c`                      # `-O`:       optimize code
 
-- $ `gcc -g hello-world.c`          
-`-g`:       debugging using gdb
+- $ `gcc -g hello-world.c`                      # `-g`:       debugging using gdb
+
 
 $ `gcc -g buggy.c -o buggy`
 
-### run gdb
+
+#### Run gdb
 
 Ref: https://www.cs.umd.edu/~srhuang/teaching/cmsc212/gdb-tutorial-handout.pdf
 
-$ `gdb <executable-name>`
+- $ `gdb buggy`
 
 or 
 
-$ `gdb`
+- $ `gdb`
 
-$ `file <executable-name>`
+- $ `file <executable-name>`
 
-3. debug
+#### Debug
 
 
-    $ `run` 
+$ `run` 
 
-    $ `continue` or `c`
+$ `continue` or `c`
 
-    **breakpoints**
+**breakpoints**
 
-    $ `break <func-name>` e.g., `break main`
+$ `break <func-name>` e.g., `break main`
 
-    $ `break buggy.c:11`
+$ `break buggy.c:11`
 
-    $ `break buggy.c:15`
+$ `break buggy.c:15`
 
-    $ `next` or `n`
+$ `next` or `n`
 
-    $ `step` or `s`
+$ `step` or `s`
 
-    $ `print a`
+$ `print a`
 
-    $ `print {a, b}`
+$ `print {a, b}`
 
-    $ `print/x a>`
+$ `print/x a>`
 
-    **watch and display**
+**watch and display**
 
-    $ `watch a`
-    
-    $ `watch {a,b}`
+$ `watch a`
 
-    $ `watch p`
+$ `watch {a,b}`
 
-    $ `display {a, f}`
+$ `watch p`
 
-    **info**
+$ `display {a, f}`
 
-    $ `frame`
+**info**
 
-    $ `list`
+$ `frame`
 
-    $ `info breakpoints` or `info b`
+$ `list`
 
-    $ `info args`
+$ `info breakpoints` or `info b`
 
-    $ `info watchpoints` or `info watch`
+$ `info args`
 
-    **help**
+$ `info watchpoints` or `info watch`
 
-    $ `help`
+**help**
 
-    $ `help run`
+$ `help`
 
-    **args**
+$ `help run`
 
-    $ `set args <arg1> <arg2> ...`
+**args**
 
-    $ `set args`
+$ `set args <arg1> <arg2> ...`
 
-    $ `run <arg1> <arg2>`
+$ `set args`
 
-    **delete breakpoints**
+$ `run <arg1> <arg2>`
 
-    $ `delete 1` # deletes the first breakpoint shown in `info b`
+**delete breakpoints**
 
-    **quit**
+$ `delete 1` # deletes the first breakpoint shown in `info b`
 
-    $ `quit`
+**quit**
+
+$ `quit`
 
 cheat-sheet: https://people.computing.clemson.edu/~chochri/gdb-basics.pdf
 
-## Project 01
+
 
 ### `man` Command
 
@@ -158,17 +164,23 @@ $ `man -k file`
 
 ### File manipulation
 
+file.c shows example of
+  - `fopen`
+  - `fclose`
+  - `perror`
+  - `fgetc`
 
+mycat.c shows example of
+  - `fgets`
+  - `fseek`
 
 
 ### String manipulation
 
+tokenize.c shows example of
+  - `strtok`
+  - `strcmp`
 
-SEEK_SET: Set the file position indicator to the beginning of the file.
-
-SEEK_CUR: Set the file position indicator to the current position plus the offset.
-
-SEEK_END: Set the file position indicator to the end of the file minus the offset.
 
 
 
