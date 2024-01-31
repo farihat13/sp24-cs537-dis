@@ -162,6 +162,8 @@ tracing `getpid()` will give us the idea of how to add a system call in xv6.
         e.g., trace `open()`, `kill()` etc. system calls.
         you need to use `argptr`, `argint` etc. to read the arguments in the kernel side.
         maintaining order.
+    
+    - show `cprintf`
 
     - the original system calls can be implemented in many different places, 
         as long as they are included correctly. 
@@ -280,7 +282,8 @@ Now, let's trace trapping into kernel.
     ```c
     num = curproc->tf->eax; // remember, movl $SYS_getpid, %eax; in usys.S
     if(num > 0 && num < NELEM(syscalls) && syscalls[num]) {
-        curproc->tf->eax = syscalls[num]();
+        curproc->tf->eax = syscalls[num](); // system call is happening in this line, 
+                                            // the return value is stored in `eax` register.
     }
     ```
     It reads the syscall number from `eax` and calls the corresponding function 
@@ -325,7 +328,7 @@ $ `echo "set auto-load safe-path /" >> ~/.gdbinit`
 
 $ `make qemu-nox-gdb`
 
-split the terminal and run 
+split the terminal and run (show `tmux`)
 $ `gdb`
 
 in another terminal
@@ -335,7 +338,9 @@ $ `continue`
 
 $ `break main`
 
-$ `frame`
+\$ `frame` or \$ `list`
+
+$ break trap
 
 
 
