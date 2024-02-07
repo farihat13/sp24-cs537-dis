@@ -1,0 +1,17 @@
+{
+    "C_Cpp.clang_format_style": "{ BasedOnStyle: LLVM, IndentWidth: 4, TabWidth: 4, ColumnLimit: 0, SortIncludes: false }",
+    "todohighlight.keywords": [
+        {
+            "text": "TODO",
+            "color": "red",
+            "backgroundColor": "#F7F799",
+            "overviewRulerColor": "grey"
+        },
+        {
+            "text": "NOTE",
+            "color": "#FFA500",
+            "backgroundColor": "transparent",
+            "overviewRulerColor": "grey"
+        }
+    ],
+}

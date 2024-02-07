@@ -1,0 +1,31 @@
+
+#include <stdio.h>
+#include <sys/types.h>
+#include <unistd.h>
+#include <stdlib.h>
+#include <errno.h> 
+#include <sys/wait.h>
+int main()
+{
+    pid_t pid = fork();
+    if (pid == 0) {
+        // the child process will execute this
+        char *const argv[3] = {
+                            "ls", // string literial is of type "const char*"
+                            "-l",
+                            NULL // it must have a NULL in the end of argv
+                        };  
+        int ret = execvp(argv[0], argv);
+        // if succeeds, execv should never return
+        // if it returns, it must fail (e.g. cannot find the executable file) 
+        printf("Fails to execute %s\n", argv[0]);
+        exit(1);
+    } else {
+        int status;
+        waitpid(pid, &status, 0);
+        printf("I'm the Parent\n");
+    }
+    return 0;
+}
+// file: points to the file name associated with the file being executed. 
+// argv:  is a null terminated array of character pointers.

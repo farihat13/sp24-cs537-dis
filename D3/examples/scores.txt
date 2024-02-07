@@ -1,0 +1,4 @@
+    tom 100
+    bob 60
+    cat 75
+    harry 80
