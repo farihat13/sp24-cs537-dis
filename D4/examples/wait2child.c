@@ -1,6 +1,8 @@
 /**
  * If we wait for child2 to finish, child1 might not have finished
  * by the time the parent process finishes.
+ * passing -1 in the first arg of waitpid (meaning wait for any child process)
+ * does not help in this case.
  * https://linux.die.net/man/2/waitpid
  */
 
@@ -10,21 +12,12 @@
 #include <sys/wait.h>
 #include <stdlib.h>
 #include <errno.h>
-#include <signal.h>
 
 char *const cmd1[3] = {"sleep", "10", NULL};
 char *const cmd2[3] = {"sleep", "2", NULL};
-char *const cmd[3] = {"ls", "-l", NULL};
-
-// Handler for SIGINT, caused by Ctrl-C at keyboard
-void my_handler_sigint(int sig) {
-    printf("\nCaught signal %d, pid %d\n", sig, getpid());
-    exit(0);
-}
 
 void child(int n) {
-    signal(SIGINT, my_handler_sigint); // Ctrl-C
-    printf("child%d pid: %d, ppid: %d, pgid: %d\n", n, getpid(), getppid(), getpgrp());
+    printf("child%d: pid %d\n", n, getpid());
     if (n == 1) {
         int ret = execvp(cmd1[0], cmd1);
         printf("Fails to execute %s by child%d\n", cmd1[0], n);
@@ -39,23 +32,17 @@ int main() {
 
     int pid1 = fork();
     if (pid1 == 0) {
-        setpgid(0, 0); // set the process group id to the process id
         child(1);
     } else {
-        setpgid(pid1, pid1); // set the process group id to the process id
         int pid2 = fork();
         if (pid2 == 0) {
-            setpgid(0, pid1); // set the pgid to the pid of first child, 0 means the process itself
             child(2);
         } else {
-            setpgid(pid2, pid1); // set the 
-            printf("parent pid: %d, ppid: %d, pgid: %d\n", getpid(), getppid(), getpgrp());
             printf("fork returns: pid1: %d, pid2: %d\n", pid1, pid2);
-            int status, wpid;
-
-            while ((wpid = waitpid(-1, &status, 0)) > 0) {
-                printf("Child %d exited with status %d\n", wpid, WEXITSTATUS(status));
-            }
+            int status;
+            int wpid = waitpid(pid2, &status, 0); // wait for the child2 to finish
+                                                  // TODO: change pid2 to pid1 to see the difference
+            printf("wpid: %d, status: %d\n", wpid, status);
             printf("parent exiting...\n");
         }
     }

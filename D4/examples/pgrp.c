@@ -20,12 +20,16 @@ int main() {
 
     int pid1 = fork();
     if (pid1 == 0) {
-        child(1);
+        // child 1
+        child(1); 
     } else {
+        // parent
         int pid2 = fork();
         if (pid2 == 0) {
+            // child 2
             child(2);
         } else {
+            // parent
             wait(NULL);
             printf("fork returns: pid1: %d, pid2: %d\n", pid1, pid2);
             printf("parent pid: %d, ppid: %d, pgid: %d\n", getpid(), getppid(), getpgrp());
