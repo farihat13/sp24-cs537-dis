@@ -55,10 +55,6 @@ This example
     b) and writes to the mmapped file. 
 The write is reflected in the original file.
 
-### MAP_GROWSUP
-
-Does not exist in original `mmap.
-
 ### forking and MAP_ANON
 
 6. `mmap-fork-anon-private.c`
@@ -93,6 +89,12 @@ This example
  b) writes to the mmapped memory in the child,
  c) and reads the mmapped memory in the parent.
 The write by child is NOT reflected in the parent because of MAP_PRIVATE.
+
+## `mremap`
+
+Remaps mmapped memory to a different location in addition to resizing it. This means that the new memory mapping might have a different address than the original mapping.
+
+9. `mremap-anon.c`: grows a mmap
 
 ## Implementing `mmap`
 
@@ -191,8 +193,6 @@ modify `fork()` and `exit()`
   case T_PGFLT: //14  
     cprintf("\tPagefault at virtual addr %x\n", rcr2());
 ```
-
-### Best practices (Optional for P5) 
 
 #### lazy allocation
 The mapped pages are not actually brought into physical memory until they are referenced; thus mmap() can be used to implement lazy loading of pages into memory (demand paging). 
